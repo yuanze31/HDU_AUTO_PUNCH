@@ -42,14 +42,14 @@ class Punch:
             self.driver.find_element(By.ID, 'index_login_btn').click()
         except Exception as e:
             print(e.__class__.__name__ + "无法访问数字杭电")
-            self.WrongwechantNotice("无法访问数字杭电")
+            self.wrongwechantNotice("无法访问数字杭电")
             sys.exit(1)
 
         try:
             self.wait.until(
                 EC.presence_of_element_located((By.ID, "errormsg")))
             print("帐号登录失败")
-            self.WrongwechantNotice(self.un + "帐号登录失败")
+            self.wrongwechantNotice(self.un + "帐号登录失败")
         except TimeoutException as e:
             self.driver.get("https://skl.hduhelp.com/passcard.html#/passcard")
             for retryCnt in range(10):
@@ -87,21 +87,21 @@ class Punch:
                 res = requests.post(
                     url, json=data, headers=headers, timeout=30)
                 if res.status_code == 200:
+                    self.succewechantNotice("打卡成功")
                     return "打卡成功"
-                    self.SuccwechantNotice("打卡成功")
                 elif retryCnt == 3:
                     print("提交表单失败")
-                    self.WrongwechantNotice("打卡失败")
+                    self.wrongwechantNotice("打卡失败")
             except Exception as e:
                 if retryCnt < 2:
                     print(e.__class__.__name__ + "打卡失败，正在重试")
                     time.sleep(3)
                 else:
                     print("打卡失败")
-                    self.WrongwechantNotice("打卡失败")
+                    self.wrongwechantNotice("打卡失败")
 
     # 打卡失败微信提示
-    def WrongwechantNotice(self, message):
+    def wrongwechantNotice(self, message):
         if self.SCKey != '':
             url = 'https://sctapi.ftqq.com/{0}.send'.format(self.SCKey)
             data = {
@@ -117,7 +117,7 @@ class Punch:
                 print(e.__class__, "推送服务配置错误")
 
     # 打卡成功微信提示
-    def SuccwechantNotice(self, message):
+    def succewechantNotice(self, message):
         if self.SCKey != '':
             url = 'https://sctapi.ftqq.com/{0}.send'.format(self.SCKey)
             data = {
