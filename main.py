@@ -88,7 +88,7 @@ class Punch:
                     url, json=data, headers=headers, timeout=30)
                 if res.status_code == 200:
                     return "打卡成功"
-                    self.WrongwechantNotice("打卡成功")
+                    self.SuccwechantNotice("打卡成功")
                 elif retryCnt == 3:
                     print("提交表单失败")
                     self.WrongwechantNotice("打卡失败")
@@ -117,7 +117,7 @@ class Punch:
                 print(e.__class__, "推送服务配置错误")
 
     # 打卡成功微信提示
-    def SuccWrongwechantNotice(self, message):
+    def SuccwechantNotice(self, message):
         if self.SCKey != '':
             url = 'https://sctapi.ftqq.com/{0}.send'.format(self.SCKey)
             data = {
