@@ -91,7 +91,7 @@ class Punch:
                     return "打卡成功"
                 elif retryCnt == 3:
                     print("提交表单失败")
-                    self.wrongwechantNotice("打卡失败")
+                    self.wrongwechantNotice("打卡失败(提交表单失败)")
             except Exception as e:
                 if retryCnt < 2:
                     print(e.__class__.__name__ + "打卡失败，正在重试")
